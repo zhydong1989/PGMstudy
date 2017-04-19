@@ -1,0 +1,17 @@
+b1.The idea behind MCMC is to perform an intelligent search of the space. To say "search" implies 
+we are looking for a particular point, which is perhaps not an accurate as we are really looking for a broad mountain
+2.Recall that MCMC returns samples from the posterior distribution, not the distribution itself.
+3.the returned sequence of "pebbles" are the samples, cumulatively called the traces
+4.MCMC does this by exploring nearby positions and moving into areas with higher probability
+5.N多次的抽样模拟后,通过频率近似重建后验概率
+6.MCMC算法通用：
+   a. 在当前的位置开始
+   b. 提议者提议向一个新位置移动("在附近仍一个石子探路": 这个提议的新位置符合一定的条件概率)
+   c. 接受或者拒绝这个新位置的提议。选择的标准：新位置是否符合数据和先验分布。("石子是否来自山上")
+   d. 如果接受：跳到新的位置。 goto: a
+      如果拒绝：goto:a
+   e. 经过很多次数 迭代后，返回所有可被接受的positions以及次数
+ 7. 新位置只和当前的位置有关，马尔科夫过程的无记忆性
+ 8. 其它估计后验分布的方法：1. 拉普拉斯近似 2.更高级的方法：Variational Bayes(变分贝叶斯)
+   
+   
