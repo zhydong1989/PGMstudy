@@ -17,8 +17,7 @@ with pm.Model() as model:
 example2：bernoulli分布的产生
       pm.Bernoulli("second_flips",0.5,shape=N) 产生的序列默认值为0
       pm.Bernoulli("second_flips",0.5,shape=N,testval=np.random.binomial(1,0.5,N)) 产生bernoulli分布
-Norm 分布的产生
-      alpha = pm.Normal("alpha", mu=0, tau=0.001, testval=0)
+Norm 分布的产生      alpha = pm.Normal("alpha", mu=0, tau=0.001, testval=0)
 均匀分布的产生:
       p=pm.Uniform("freq_cheating",0,1)
 指数分布的产生：
@@ -41,42 +40,4 @@ example4： accident 的例子:(参数估计?)   _____  对应一般的机器学
       3.a,b的先验分布不妨假设为一个正态分布(均值为0, 标准差为 0.001)
 数据集: [温度， 事故是否发生]
 目标:  a的后验分布，b的后验分布, 以及给定 t的情况下，发生事故的概率(根据a,b 做回归后的 概率点的平均值);  发生事故的概率的95%的分位点
-
-import numpy as np
-import scipy.stats as stats
-import pymc3 as pm
-import theano.tensor as tt
-import matplotlib.pyplot as plt
-from scipy.stats.mstats import mquantiles
-challenger_data=np.genfromtxt("G:/量化投资/概率图模型/challenger_data.csv", skip_header=1,
-                                usecols=[1, 2], missing_values="NA",
-                                delimiter=",")
-challenger_data=challenger_data[~np.isnan(challenger_data[:,1])]
-
-temperature =challenger_data[:,0]
-D=challenger_data[:,1]
-def logistic(x, beta, alpha=0):
-    return 1.0 / (1.0 + np.exp(np.dot(beta, x) + alpha))
-'''
-获得后验分布，前验分布为正态分布
-'''
-with pm.Model() as model:
-    beta=pm.Normal("beta",mu=0,tau=0.001,testval=0)
-    alpha=pm.Normal("alpha",mu=0,tau=0.001,testval=0)
-    p=pm.Deterministic("p",1.0 / (1.0 + tt.exp(beta*temperature + alpha)))
-    observed = pm.Bernoulli("bernoulli_obs", p, observed=D)
-    start = pm.find_MAP()
-    step = pm.Metropolis()
-    trace = pm.sample(120000, step=step, start=start)
-    burned_trace = trace[100000::2]
-
-alpha_samples = burned_trace["alpha"][:, None]  # best to make them 1d 
-beta_samples = burned_trace["beta"][:, None]
-'''
-预测
-'''
-t = np.linspace(temperature.min() - 5, temperature.max()+5, 51)[:, None]
-p_t = logistic(t.T, beta_samples, alpha_samples)
-mean_prob_t = p_t.mean(axis=0)#跟定t的平均概率
-qs = mquantiles(p_t, [0.025, 0.975], axis=0) #95%置信区间
-
+模型评价:? 暂缺
