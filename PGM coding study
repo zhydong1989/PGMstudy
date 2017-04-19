@@ -34,7 +34,7 @@ Arrays of PyMC3 variables：
    for i in range(0, N):
    	x[i] = pm.Exponential('x_%i' % i, (i+1)**2)
 
-example4： accident 的例子:(参数估计?)   _____  对应一般的机器学习方法： logistic 回归
+example4： accident 的例子:(贝叶斯估计?)   _____  对应一般的机器学习方法： logistic 回归
 假设: 1.事故发生的概率 P 和 温度(t)的关系： logistic： P(accident)=1/exp(a+b* t)
       2.在某个温度下 事故发生是一个benoulli分布。(与观察的数据产生关联，从而可以学习 a,b)
       3.a,b的先验分布不妨假设为一个正态分布(均值为0, 标准差为 0.001)
