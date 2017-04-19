@@ -1,4 +1,4 @@
-b1.The idea behind MCMC is to perform an intelligent search of the space. To say "search" implies 
+1.The idea behind MCMC is to perform an intelligent search of the space. To say "search" implies 
 we are looking for a particular point, which is perhaps not an accurate as we are really looking for a broad mountain
 2.Recall that MCMC returns samples from the posterior distribution, not the distribution itself.
 3.the returned sequence of "pebbles" are the samples, cumulatively called the traces
@@ -13,5 +13,9 @@ we are looking for a particular point, which is perhaps not an accurate as we ar
    e. 经过很多次数 迭代后，返回所有可被接受的positions以及次数
  7. 新位置只和当前的位置有关，马尔科夫过程的无记忆性
  8. 其它估计后验分布的方法：1. 拉普拉斯近似 2.更高级的方法：Variational Bayes(变分贝叶斯)
-   
-   
+ 9. using MAP  to improve convergence:
+       足够长的迭代，MCMC算法收敛，后验分布与初始位置无关。如果后验分布不同，说明没有收敛，我们不应该用这一部分采样
+       
+Tips:
+axis=0: 求列向量的运算(如 mean, sum）
+axis=1: 求行向量的运算(如 mean, sum）
