@@ -1,1 +1,14 @@
+随机变量：参数确定后仍然是一个随机变量。例如[0,1]均匀分布对应变量X.
+决定变量：参数确定后,值就确定的变量。例一个switch变量: switch(x>2,1,0)
+with pm.Model() as model:
+    p_A = pm.Uniform("p_A", 0, 1)
+    p_B = pm.Uniform("p_B", 0, 1)
+    # Define the deterministic delta function. This is our unknown of interest.
+    delta = pm.Deterministic("delta", p_A - p_B)
+    obs_A = pm.Bernoulli("obs_A", p_A, observed=observations_A)
+    obs_B = pm.Bernoulli("obs_B", p_B, observed=observations_B)
 
+    # To be explained in chapter 3.
+    step = pm.Metropolis()  # sampling
+		trace = pm.sample(20000, step=step)# sampling 
+    burned_trace=trace[1000:] # 1000次后认为稳定，开始取值
