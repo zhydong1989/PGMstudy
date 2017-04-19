@@ -35,3 +35,13 @@ t = np.linspace(temperature.min() - 5, temperature.max()+5, 51)[:, None]
 p_t = logistic(t.T, beta_samples, alpha_samples)
 mean_prob_t = p_t.mean(axis=0)#跟定t的平均概率
 qs = mquantiles(p_t, [0.025, 0.975], axis=0) #95%置信区间
+
+'''
+评价:看实际上的发生的情况，是否与 预测的概率分布相近:
+低发生概率的部分(预测) 实际发生的概率小于高发生概率部分(预测)的发生概率（实际观察到的情况)
+'''
+temperaturetmp=temperature[:,None]
+p_predict=logistic(temperaturetmp.T,beta_samples,alpha_samples).mean(axis=0)
+result=np.array((temperature,D,p_predict)).T
+resultdata=pd.DataFrame(result,columns=['temperatrue','AccidentObserved','Prediction'])
+resultdata=resultdata.sort(columns='Prediction')
