@@ -1,3 +1,11 @@
+beta 分布是 Bernoulli 和 binomial 分布的共轭先验.
+Dirichlet 分布是 beta 分布的多维推广.
+gamma 函数是 beta 分布归一化参数的一部分
+
+
+
+
+
 随机变量：参数确定后仍然是一个随机变量。例如[0,1]均匀分布对应变量X.
 决定变量：参数确定后,值就确定的变量。例一个switch变量: switch(x>2,1,0)
 example1: 随机变量 and 决定变量
